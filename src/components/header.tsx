@@ -7,29 +7,50 @@ import {
   Input,
   Button,
   Avatar,
-  divider,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
 } from '@nextui-org/react';
 import { auth } from '@/auth';
-import { Dawning_of_a_New_Day } from 'next/font/google';
+import * as actions from '@/actions';
 import React from 'react';
 
 const Header = async () => {
   const session = await auth();
   let authContent: React.ReactNode;
   if (session?.user) {
-    authContent = <Avatar src={session.user.image || ''} />;
+    authContent = (
+      <Popover placement='left'>
+        <PopoverTrigger>
+          <Avatar src={session.user.image || ''} />
+        </PopoverTrigger>
+        <PopoverContent>
+          <div className="p-4">
+            <form action={actions.signOut}>
+              <Button type='submit' color='secondary' variant='bordered'>
+                Sign Out
+              </Button>
+            </form>
+          </div>
+        </PopoverContent>
+      </Popover>
+    );
   } else {
     authContent = (
       <>
         <NavbarItem>
-          <Button type='submit' color='secondary' variant='bordered'>
-            Sign In
-          </Button>
+          <form action={actions.signIn}>
+            <Button type='submit' color='secondary' variant='bordered'>
+              Sign In
+            </Button>
+          </form>
         </NavbarItem>
         <NavbarItem>
-          <Button type='submit' color='primary' variant='flat'>
-            Sign Up
-          </Button>
+          <form action={actions.signIn}>
+            <Button type='submit' color='primary' variant='flat'>
+              Sign Up
+            </Button>
+          </form>
         </NavbarItem>
       </>
     );

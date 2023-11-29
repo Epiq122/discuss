@@ -6,24 +6,5 @@ import Header from '@/components/header';
 
 export default async function Home() {
   const session = await auth();
-  return (
-    <div>
-
-      <form action={actions.signIn}>
-        <Button type='submit'>SignIn</Button>
-      </form>
-
-      <form action={actions.signOut}>
-        <Button type='submit'>SignOut</Button>
-      </form>
-
-      {session?.user ? (
-        <div>{JSON.stringify(session.user)}</div>
-      ) : (
-        <div>Signed out</div>
-      )}
-
-      <Profile />
-    </div>
-  );
+  return <div></div>;
 }
